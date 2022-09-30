@@ -6,5 +6,7 @@
         "psr-4": {
             "QueryJson\\": "src/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
