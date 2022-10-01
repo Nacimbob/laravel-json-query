@@ -1,7 +1,7 @@
 <?php
 
 namespace QueryJson\ConnectionQueryJson;
-
+use \Illuminate\Database\ConnectionInterface as Connection;
 use Closure;
 
 abstract class ConnectionQuery
@@ -14,7 +14,7 @@ abstract class ConnectionQuery
     /**
      * @return Closure
      */
-    abstract public function whereJsonKeyExists(): Closure;
+    abstract public function whereJsonExists(): Closure;
 
     /**
      * @return Closure
