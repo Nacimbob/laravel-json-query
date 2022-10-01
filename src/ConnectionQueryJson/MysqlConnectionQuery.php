@@ -16,7 +16,7 @@ class MysqlConnectionQuery extends ConnectionQuery
         return function(string $path, $operator,$value) use ($columnAndPathResolver) {
             [$column, $path] = $columnAndPathResolver($path);
 
-            $sql = " json_value($column, ?) $operator ? ";
+            $sql = "json_value($column, ?) $operator ?";
 
             return $this->whereRaw($sql, [$path, $value]);
         };
@@ -32,7 +32,7 @@ class MysqlConnectionQuery extends ConnectionQuery
         return function(string $path) use ($columnAndPathResolver) {
             [$column, $path] = $columnAndPathResolver($path);
 
-            $sql = " json_exists($column, ?) ";
+            $sql = "json_exists($column, ?)";
 
             return $this->whereRaw($sql, $path);
         };
