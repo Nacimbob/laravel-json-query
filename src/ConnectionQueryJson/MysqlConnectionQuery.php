@@ -9,15 +9,41 @@ class MysqlConnectionQuery extends ConnectionQuery
     /**
      * @inheritDoc
      */
-    abstract public function whereJsonValue(): Closure;
+    public function whereJsonValue(): Closure
+    {
+        return function(string $path, string $operator, $value) {
+
+        };
+    }
 
     /**
      * @inheritDoc
      */
-    abstract public function whereJsonKeyExists(): Closure;
+    public function whereJsonExists(): Closure
+    {
+        $columnAndPathResolver = function(string $path): array {
+            $path = explode('->', $path);
+
+            return [
+                'column' => array_shift($path),
+                'path' => "$.". implode('.', $path),
+            ];
+        };        
+
+        return function(string $path) use ($columnAndPathResolver) {
+            $columnAndPath =  $columnAndPathResolver($path);
+
+            $sql = " json_exists(:column, :path) ";
+
+            $this->whereRaw($sql, $columnAndPath);
+        };
+    }
 
     /**
      * @inheritDoc
      */
-    abstract public function whereJsonIsValid(): Closure;
+    public function whereJsonIsValid(): Closure
+    {
+        return function(){};
+    }
 }
