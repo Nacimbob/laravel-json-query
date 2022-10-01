@@ -17,9 +17,10 @@ class QueryJson
 
     private $connectionQueryFactory;
 
-    protected $methodsMapping = [
+    public static $methodsMapping = [
         'whereJsonExists' => 'whereJsonExists',
-        'whereJsonIsValid' => 'whereJsonIsValid'
+        'whereJsonIsValid' => 'whereJsonIsValid',
+        'whereJsonValue' => 'whereJsonValue'
     ];
 
     public function __construct(Connection $connection, ConnectionQueryFactory $connectionQueryFactory)
@@ -34,7 +35,7 @@ class QueryJson
     {
         $connectionQuery = $this->getConnectionQuery();
 
-        foreach ($this->methodsMapping  as $alias => $name) {
+        foreach (static::$methodsMapping  as $alias => $name) {
             $this->query->macro($alias, $connectionQuery->{$name}());
         }
     }
