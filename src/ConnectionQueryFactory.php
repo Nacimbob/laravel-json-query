@@ -20,7 +20,7 @@ class ConnectionQueryFactory
     {
         $concrete = $this->getConcreteClassName($name);
 
-        $this->container->make($concrete);
+        return $this->container->make($concrete);
     }
 
     /**
