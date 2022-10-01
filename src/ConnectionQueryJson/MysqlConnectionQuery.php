@@ -11,8 +11,14 @@ class MysqlConnectionQuery extends ConnectionQuery
      */
     public function whereJsonValue(): Closure
     {
-        return function(string $path, string $operator, $value) {
+        $columnAndPathResolver = $this->getColumnAndPathResolver();
 
+        return function(string $path, $operator,$value) use ($columnAndPathResolver) {
+            [$column, $path] = $columnAndPathResolver($path);
+
+            $sql = " json_value($column, ?) $operator ? ";
+
+            return $this->whereRaw($sql, [$path, $value]);
         };
     }
 
