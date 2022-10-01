@@ -1,7 +1,6 @@
 <?php
 
 namespace QueryJson\ConnectionQueryJson;
-use \Illuminate\Database\ConnectionInterface as Connection;
 use Closure;
 
 abstract class ConnectionQuery
@@ -10,17 +9,50 @@ abstract class ConnectionQuery
     /**
      * @return Closure
      */
-    abstract public function whereJsonValue(): Closure;
+    public function whereJsonValue(): Closure
+    {
+        $columnAndPathResolver = $this->getColumnAndPathResolver();
+
+        $sqlCompiler = $this->{"get". __FUNCTION__ . "Compiler"}();
+
+        return function(string $path, string $operator, $value) use ($columnAndPathResolver, $sqlCompiler) {
+            [$column, $path] = $columnAndPathResolver($path);
+
+            $sql = $sqlCompiler($column, $operator);
+
+            return $this->whereRaw($sql, [$path, $value]);
+        };
+    }
 
     /**
      * @return Closure
      */
-    abstract public function whereJsonExists(): Closure;
+    public function whereJsonExists(): Closure
+    {
+        $columnAndPathResolver = $this->getColumnAndPathResolver();
+
+        $sqlCompiler = $this->{"get". __FUNCTION__ . "Compiler"}();
+
+        return function(string $path) use ($columnAndPathResolver, $sqlCompiler) {
+            [$column, $path] = $columnAndPathResolver($path);
+
+            $sql = $sqlCompiler($column);
+
+            return $this->whereRaw($sql, $path);
+        };
+    }
 
     /**
      * @return Closure
      */
-    abstract public function whereJsonIsValid(): Closure;
+    public function whereJsonIsValid(): Closure
+    {
+        $sqlCompiler = $this->{"get". __FUNCTION__ . "Compiler"}();
+
+        return function(string $column) use($sqlCompiler) {
+            return $this->whereRaw($sqlCompiler($column));
+        };
+    }
 
     /**
      * @return Closure
@@ -57,4 +89,19 @@ abstract class ConnectionQuery
 
         return '.';
     }
+
+    /**
+     * @return Closure
+     */
+    abstract protected function getWhereJsonValueCompiler(): Closure;
+
+    /**
+     * @return Closure
+     */
+    abstract protected function getWhereJsonIsValidCompiler(): Closure;
+
+    /**
+     * @return Closure
+     */
+    abstract protected function getWhereJsonExistsCompiler(): Closure;
 }

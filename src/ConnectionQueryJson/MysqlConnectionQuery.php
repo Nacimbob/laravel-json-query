@@ -9,42 +9,30 @@ class MysqlConnectionQuery extends ConnectionQuery
     /**
      * @inheritDoc
      */
-    public function whereJsonValue(): Closure
+    protected function getWhereJsonValueCompiler(): Closure
     {
-        $columnAndPathResolver = $this->getColumnAndPathResolver();
-
-        return function(string $path, $operator,$value) use ($columnAndPathResolver) {
-            [$column, $path] = $columnAndPathResolver($path);
-
-            $sql = "json_value($column, ?) $operator ?";
-
-            return $this->whereRaw($sql, [$path, $value]);
+        return function(string $column, string $operator): string {
+            return "json_value($column, ?) $operator ?";
         };
     }
 
     /**
      * @inheritDoc
      */
-    public function whereJsonExists(): Closure
+    protected function getWhereJsonExistsCompiler(): Closure
     {
-        $columnAndPathResolver = $this->getColumnAndPathResolver();
-
-        return function(string $path) use ($columnAndPathResolver) {
-            [$column, $path] = $columnAndPathResolver($path);
-
-            $sql = "json_exists($column, ?)";
-
-            return $this->whereRaw($sql, $path);
+        return function(string $column): string {
+            return  "json_exists($column, ?)";
         };
     }
 
     /**
      * @inheritDoc
      */
-    public function whereJsonIsValid(): Closure
+    protected function getWhereJsonIsValidCompiler(): Closure
     {
-        return function(string $column){
-            return $this->whereRaw("json_valid($column)");
+        return function(string $column): string {
+            return "json_valid($column)";
         };
     }
 }
