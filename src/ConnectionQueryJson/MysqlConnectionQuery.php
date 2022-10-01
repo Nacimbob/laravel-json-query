@@ -25,17 +25,17 @@ class MysqlConnectionQuery extends ConnectionQuery
             $path = explode('->', $path);
 
             return [
-                'column' => array_shift($path),
-                'path' => "$.". implode('.', $path),
+                "`" . array_shift($path) . "`",
+                "$". implode('.', $path),
             ];
-        };        
+        };
 
         return function(string $path) use ($columnAndPathResolver) {
-            $columnAndPath =  $columnAndPathResolver($path);
+            [$column, $path] = $columnAndPathResolver($path);
 
-            $sql = " json_exists(:column, :path) ";
+            $sql = " json_exists($column, ?) ";
 
-            $this->whereRaw($sql, $columnAndPath);
+            return $this->whereRaw($sql, $path);
         };
     }
 
