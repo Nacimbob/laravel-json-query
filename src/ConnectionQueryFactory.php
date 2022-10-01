@@ -29,12 +29,10 @@ class ConnectionQueryFactory
      */
     private function getConcreteClassName(string $name): string
     {
-        $abstract = ConnectionQuery::class;
+        $abstract = explode('\\', ConnectionQuery::class);
 
-        $abstractBaseName = class_basename($abstract);
+        $abstract[]  = ucfirst($name) . array_pop($abstract);
 
-        $concreteClassName = ucfirst($name) . $abstractBaseName;
-
-        return str_replace($abstractBaseName, $concreteClassName, $abstract);
+        return implode('\\', $abstract);
     }
 }
