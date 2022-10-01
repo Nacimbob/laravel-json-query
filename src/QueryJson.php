@@ -19,6 +19,7 @@ class QueryJson
 
     protected $methodsMapping = [
         'whereJsonExists' => 'whereJsonExists',
+        'whereJsonIsValid' => 'whereJsonIsValid'
     ];
 
     public function __construct(Connection $connection, ConnectionQueryFactory $connectionQueryFactory)

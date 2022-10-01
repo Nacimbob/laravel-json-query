@@ -21,14 +21,7 @@ class MysqlConnectionQuery extends ConnectionQuery
      */
     public function whereJsonExists(): Closure
     {
-        $columnAndPathResolver = function(string $path): array {
-            $path = explode('->', $path);
-
-            return [
-                "`" . array_shift($path) . "`",
-                "$". implode('.', $path),
-            ];
-        };
+        $columnAndPathResolver = $this->getColumnAndPathResolver();
 
         return function(string $path) use ($columnAndPathResolver) {
             [$column, $path] = $columnAndPathResolver($path);
@@ -44,6 +37,8 @@ class MysqlConnectionQuery extends ConnectionQuery
      */
     public function whereJsonIsValid(): Closure
     {
-        return function(){};
+        return function(string $column){
+            return $this->whereRaw("json_valid($column)");
+        };
     }
 }
