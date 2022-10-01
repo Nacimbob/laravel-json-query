@@ -15,20 +15,31 @@ class QueryJson
      */
     private $driver;
 
-    protected $methodsMapping = [
+    private $connectionQueryFactory;
 
+    protected $methodsMapping = [
+        'whereJsonExists' => 'whereJsonExists',
     ];
 
-    public function __construct(Connection $connection, )
+    public function __construct(Connection $connection, ConnectionQueryFactory $connectionQueryFactory)
     {
+        $this->connection = $connection;
         $this->query =  $connection->query();
         $this->driver = $connection->getDriverName();
+        $this->connectionQueryFactory = $connectionQueryFactory;
     }
 
     public function extendQueryBuilder(): void
     {
+        $connectionQuery = $this->getConnectionQuery();
+
         foreach ($this->methodsMapping  as $alias => $name) {
-            $this->query->macro($alias, $this->{$name}());
+            $this->query->macro($alias, $connectionQuery->{$name}());
         }
+    }
+
+    private function getConnectionQuery()
+    {
+        return $this->connectionQueryFactory->make($this->driver);
     }
 }
