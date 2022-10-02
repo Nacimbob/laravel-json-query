@@ -1,10 +1,10 @@
 <?php
 
-namespace QueryJson;
-use Illuminate\Contracts\Container\Container;
-use QueryJson\ConnectionQueryJson\ConnectionQuery;
+namespace QueryJson\Connections;
 
-class ConnectionQueryFactory
+use Illuminate\Contracts\Container\Container;
+
+class ConnectionFactory
 {
     /**
      * @var Container
@@ -16,7 +16,7 @@ class ConnectionQueryFactory
         $this->container = $container;
     }
 
-    public function make(string $name): ConnectionQuery
+    public function make(string $name): Connection
     {
         $concrete = $this->getConcreteClassName($name);
 
@@ -29,7 +29,7 @@ class ConnectionQueryFactory
      */
     private function getConcreteClassName(string $name): string
     {
-        $abstract = explode('\\', ConnectionQuery::class);
+        $abstract = explode('\\', Connection::class);
 
         $abstract[]  = ucfirst($name) . array_pop($abstract);
 

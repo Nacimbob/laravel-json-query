@@ -11,6 +11,6 @@ class QueryJsonServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app[QueryJson::class]->extendQueryBuilder();
+        $this->app[QueryJsonManager::class]->extendQueryBuilder();
     }
 }

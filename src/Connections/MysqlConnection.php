@@ -1,10 +1,10 @@
 <?php
 
-namespace QueryJson\ConnectionQueryJson;
+namespace QueryJson\Connections;
 
 use Closure;
 
-class MysqlConnectionQuery extends ConnectionQuery
+class MysqlConnection extends Connection
 {
     /**
      * @inheritDoc

@@ -3,7 +3,10 @@
 namespace QueryJson;
 
 use \Illuminate\Database\ConnectionInterface as Connection;
-class QueryJson
+use QueryJson\Connections\Connection as ConnectionsConnection;
+use QueryJson\Connections\ConnectionFactory;
+
+class QueryJsonManager
 {
     /**
      * @var Illuminate\Database\Query
@@ -15,7 +18,7 @@ class QueryJson
      */
     private $driver;
 
-    private $connectionQueryFactory;
+    private $connectionFactory;
 
     public static $methodsMapping = [
         'whereJsonExists' => 'whereJsonExists',
@@ -23,12 +26,12 @@ class QueryJson
         'whereJsonValue' => 'whereJsonValue'
     ];
 
-    public function __construct(Connection $connection, ConnectionQueryFactory $connectionQueryFactory)
+    public function __construct(Connection $connection, ConnectionFactory $connectionFactory)
     {
         $this->connection = $connection;
         $this->query =  $connection->query();
         $this->driver = $connection->getDriverName();
-        $this->connectionQueryFactory = $connectionQueryFactory;
+        $this->connectionFactory = $connectionFactory;
     }
 
     public function extendQueryBuilder(): void
@@ -40,8 +43,8 @@ class QueryJson
         }
     }
 
-    private function getConnectionQuery()
+    private function getConnectionQuery(): ConnectionsConnection
     {
-        return $this->connectionQueryFactory->make($this->driver);
+        return $this->connectionFactory->make($this->driver);
     }
 }

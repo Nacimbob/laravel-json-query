@@ -1,9 +1,9 @@
 <?php
 
-namespace QueryJson\ConnectionQueryJson;
+namespace QueryJson\Connections;
 use Closure;
 
-abstract class ConnectionQuery
+abstract class Connection
 {
     const BASE_PATH_PREFIX = '$';
     /**
