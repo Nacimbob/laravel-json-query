@@ -20,12 +20,6 @@ class QueryJsonManager
 
     private $connectionFactory;
 
-    public static $methodsMapping = [
-        'whereJsonExists' => 'whereJsonExists',
-        'whereJsonIsValid' => 'whereJsonIsValid',
-        'whereJsonValue' => 'whereJsonValue'
-    ];
-
     public function __construct(Connection $connection, ConnectionFactory $connectionFactory)
     {
         $this->connection = $connection;
@@ -34,15 +28,21 @@ class QueryJsonManager
         $this->connectionFactory = $connectionFactory;
     }
 
+    /**
+     * @return void
+     */
     public function extendQueryBuilder(): void
     {
         $connectionQuery = $this->getConnectionQuery();
 
-        foreach (static::$methodsMapping  as $alias => $name) {
-            $this->query->macro($alias, $connectionQuery->{$name}());
+        foreach (get_class_methods($connectionQuery) as $name) {
+            $this->query->macro($name, $connectionQuery->{$name}());
         }
     }
 
+    /**
+     * @return ConnectionsConnection
+     */
     private function getConnectionQuery(): ConnectionsConnection
     {
         return $this->connectionFactory->make($this->driver);
