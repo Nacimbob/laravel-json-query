@@ -3,6 +3,7 @@
 namespace QueryJson\Test\WhereJson;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use QueryJson\Test\Stubs\JsonModel;
 use QueryJson\Test\TestCase;
 
 class WhereJsonIsValidTest extends TestCase
@@ -20,10 +21,12 @@ class WhereJsonIsValidTest extends TestCase
             ]);
         }
 
-        $this->assertEquals(
-            $expected ,
-            \DB::table('test_json')->whereJsonIsValid('json')->count()
-        );
+        foreach ([JsonModel::query(), \DB::table('test_json')] as $query) {
+            $this->assertEquals(
+                $expected,
+                $query->whereJsonIsValid('json')->count()
+            );
+        }
     }
 
 
@@ -35,7 +38,7 @@ class WhereJsonIsValidTest extends TestCase
         return [
             [
                 $valid = [
-                    json_encode($array ),
+                    json_encode($array),
                     json_encode([$array, $array, $array]),
                     json_encode([$array, $array, $array, [[[$array]]]]),
                 ],

@@ -3,6 +3,7 @@
 namespace QueryJson\Test\WhereJson;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use QueryJson\Test\Stubs\JsonModel;
 use QueryJson\Test\TestCase;
 
 class WhereJsonValueTest extends TestCase
@@ -15,19 +16,18 @@ class WhereJsonValueTest extends TestCase
      */
     public function WhereJsonValue(array $data, string $path, $operator, $match, $expected)
     {
-        foreach ($data as $value) {
-            \DB::table('test_json')->insert([
-                'json' => $value
-            ]);
+        $this->insertData($data);
+
+        foreach ([JsonModel::query(), \DB::table('test_json')] as $query) {
+            $result = $query->whereJsonValue('json'. $path, $operator, $match)
+               ->count();
+    
+            $this->assertEquals(
+                $expected,
+                $result 
+            );
         }
 
-        $result = \DB::table('test_json')->whereJsonValue('json'. $path, $operator, $match)
-           ->count();
-
-        $this->assertEquals(
-            $expected,
-            $result 
-        );
     }
 
 
