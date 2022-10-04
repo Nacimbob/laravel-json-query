@@ -19,16 +19,6 @@ class MysqlConnection extends Connection
     /**
      * @inheritDoc
      */
-    protected function getWhereJsonExistsCompiler(): Closure
-    {
-        return function(string $column): string {
-            return  "json_exists($column, ?)";
-        };
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function getWhereJsonIsValidCompiler(): Closure
     {
         return function(string $column): string {
