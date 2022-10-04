@@ -1,10 +1,19 @@
 {
-    "name": "nacimbob/laravel_json_query",
+    "name": "canedoc/laravel-json-query",
     "license": "MIT",
-    "homepage": "https://github.com/Nacimbob/laravel_json_query",
+    "homepage": "https://github.com/canedoc/laravel_json_query",
+    "require-dev": {
+        "orchestra/testbench": "^5.0|^6.0|^7.0",
+        "nunomaduro/collision": "^5.10"
+    },
     "autoload": {
         "psr-4": {
             "QueryJson\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "QueryJson\\Test\\":  "test/"
         }
     },
     "extra": {
