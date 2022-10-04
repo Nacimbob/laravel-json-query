@@ -1,10 +1,11 @@
 <?php
 
-namespace QueryJson\Test;
+namespace QueryJson\Test\WhereJson;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use QueryJson\Test\TestCase;
 
-class WhereJsonTest extends TestCase
+class WhereJsonIsValidTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -24,6 +25,8 @@ class WhereJsonTest extends TestCase
             \DB::table('test_json')->whereJsonIsValid('json')->count()
         );
     }
+
+
 
     public function isValidDataProvider(): array
     {
