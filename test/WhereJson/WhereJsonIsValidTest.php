@@ -15,11 +15,7 @@ class WhereJsonIsValidTest extends TestCase
      */
     public function testWhereJsonIsValid($data, $expected)
     {
-        foreach ($data as $value) {
-            \DB::table('test_json')->insert([
-                'json' => $value
-            ]);
-        }
+        $this->insertData($data);
 
         foreach ([JsonModel::query(), \DB::table('test_json')] as $query) {
             $this->assertEquals(
