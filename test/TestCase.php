@@ -30,4 +30,17 @@ class TestCase extends TestBenchCase
             QueryJsonServiceProvider::class,
         ];
     }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    protected function insertData(array $data): void
+    {
+        foreach ($data as $value) {
+            \DB::table('test_json')->insert([
+                'json' => $value
+            ]);
+        }
+    }
 }
