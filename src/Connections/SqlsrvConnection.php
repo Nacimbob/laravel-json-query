@@ -22,7 +22,7 @@ class SqlsrvConnection extends Connection
     protected function getWhereJsonIsValidCompiler(): Closure
     {
         return function(string $column): string {
-            return "isjson($column)";
+            return "isjson($column) = 1";
         };
     }
 }
