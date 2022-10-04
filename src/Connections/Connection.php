@@ -27,24 +27,6 @@ abstract class Connection
     /**
      * @return Closure
      */
-    public function whereJsonExists(): Closure
-    {
-        $columnAndPathResolver = $this->getColumnAndPathResolver();
-
-        $sqlCompiler = $this->{"get". __FUNCTION__ . "Compiler"}();
-
-        return function(string $path) use ($columnAndPathResolver, $sqlCompiler) {
-            [$column, $path] = $columnAndPathResolver($path);
-
-            $sql = $sqlCompiler($column);
-
-            return $this->whereRaw($sql, $path);
-        };
-    }
-
-    /**
-     * @return Closure
-     */
     public function whereJsonIsValid(): Closure
     {
         $sqlCompiler = $this->{"get". __FUNCTION__ . "Compiler"}();
@@ -99,9 +81,4 @@ abstract class Connection
      * @return Closure
      */
     abstract protected function getWhereJsonIsValidCompiler(): Closure;
-
-    /**
-     * @return Closure
-     */
-    abstract protected function getWhereJsonExistsCompiler(): Closure;
 }
