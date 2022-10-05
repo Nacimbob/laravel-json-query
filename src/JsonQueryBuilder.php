@@ -35,6 +35,14 @@ class JsonQueryBuilder
     /**
      * @return callback
      */
+    public function orWhereJsonValue()
+    {
+        return $this->getWhereJsonValueQuery('or');
+    }
+
+    /**
+     * @return callback
+     */
     private function getWhereJsonValueQuery($associativity = '')
     {
         $queryCompiler = $this->getQueryCompiler(__FUNCTION__, $associativity);
