@@ -61,9 +61,17 @@ class JsonQueryBuilder
     /**
      * @return callback
      */
+    public function orWhereJsonIsValid()
+    {
+        return $this->getWhereJsonIsValidQuery('or');
+    }
+
+    /**
+     * @return callback
+     */
     private function getWhereJsonIsValidQuery(string $associativity = '')
     {
-        $queryCompiler = $this->getQueryCompiler(__FUNCTION__, $associativity);
+        $queryCompiler = $this->getQueryCompiler(__FUNCTION__);
 
         return function(string $column) use($queryCompiler, $associativity) {
             return $this->{$associativity .  'WhereRaw'}(
@@ -75,11 +83,11 @@ class JsonQueryBuilder
     /**
      * @return array
      */
-    private function getQueryCompiler(string $method, string $associativity): array
+    private function getQueryCompiler(string $method): array
     {
         return [
             $this->queryCompilerFactory->make($this->driver),
-            $associativity . substr_replace($method, 'Compiler', - 5)
+            substr_replace($method, 'Compiler', - 5)
         ];
     }
 }
