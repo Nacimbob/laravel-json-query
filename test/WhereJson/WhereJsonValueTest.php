@@ -30,6 +30,28 @@ class WhereJsonValueTest extends TestCase
 
     }
 
+        /**
+     * @test
+     * @dataProvider whereJsonValueDataProvider
+     */
+    public function orWhereJsonValue(array $data, string $path, $operator, $match, $expected)
+    {
+        $this->insertData($data);
+
+        foreach ([JsonModel::query(), \DB::table('test_json')] as $query) {
+            $query->WhereRaw('1 = 0');
+
+            $result = $query->orWhereJsonValue('json'. $path, $operator, $match)
+               ->count();
+    
+            $this->assertEquals(
+                $expected,
+                $result 
+            );
+        }
+
+    }
+
 
 
     /**
