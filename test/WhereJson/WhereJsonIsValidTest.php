@@ -25,6 +25,23 @@ class WhereJsonIsValidTest extends TestCase
         }
     }
 
+    /**
+     * @dataProvider isValidDataProvider
+     */
+    public function testOrWhereJsonIsValid($data, $expected)
+    {
+        $this->insertData($data);
+
+        foreach ([JsonModel::query(), \DB::table('test_json')] as $query) {
+            $query->WhereRaw('1 = 0');
+
+            $this->assertEquals(
+                $expected,
+                $query->orWhereJsonIsValid('json')->count()
+            );
+        }
+    }
+
 
 
     public function isValidDataProvider(): array
