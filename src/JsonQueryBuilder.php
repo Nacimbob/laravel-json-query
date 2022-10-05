@@ -63,7 +63,7 @@ class JsonQueryBuilder
      */
     public function whereJsonIsValid()
     {
-        return $this->getWhereJsonIsValidQuery();
+        return $this->getWhereJsonIsValidQuery('');
     }
 
     /**
@@ -77,15 +77,31 @@ class JsonQueryBuilder
     /**
      * @return callback
      */
-    private function getWhereJsonIsValidQuery(string $associativity = '')
+    private function getWhereJsonIsValidQuery(string $associativity = '', string $method = null)
     {
-        $queryCompiler = $this->getQueryCompiler(__FUNCTION__);
+        $queryCompiler = $this->getQueryCompiler($method ?? __FUNCTION__);
 
         return function(string $column) use($queryCompiler, $associativity) {
             return $this->{$associativity .  'WhereRaw'}(
                 call_user_func($queryCompiler, $column),
             );
         };
+    }
+
+        /**
+     * @return callback
+     */
+    public function whereJsonIsInValid()
+    {
+        return $this->getWhereJsonIsValidQuery('', 'getWhereJsonIsInValidQuery');
+    }
+
+    /**
+     * @return callback
+     */
+    public function orWhereJsonIsInValid()
+    {
+        return $this->getWhereJsonIsValidQuery('or', 'getWhereJsonIsInValidQuery');
     }
 
     /**
