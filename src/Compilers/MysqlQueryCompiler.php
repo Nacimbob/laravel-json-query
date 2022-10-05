@@ -19,6 +19,14 @@ class MysqlQueryCompiler extends QueryCompiler
      */
     public function getWhereJsonIsValidCompiler(string $column): string
     {
-        return "json_valid($column)";
+        return "json_valid($column) = 1";
+    }
+
+        /**
+     * @inheritDoc
+     */
+    public function getWhereJsonIsInValidCompiler(string $column): string
+    {
+        return "json_valid($column) = 0";
     }
 }

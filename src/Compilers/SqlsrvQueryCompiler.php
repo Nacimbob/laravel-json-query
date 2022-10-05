@@ -11,4 +11,12 @@ class SqlsrvQueryCompiler extends MysqlQueryCompiler
     {
         return "isjson($column) = 1";
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getWhereJsonIsInValidCompiler(string $column): string
+    {
+        return "isjson($column) = 0";
+    }
 }
