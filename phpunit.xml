@@ -14,8 +14,8 @@
          verbose="true"
 >
     <testsuites>
-        <testsuite name="Auditing Test Suite">
-            <directory suffix="Test.php">./test</directory>
+        <testsuite name="Json Query builder">
+            <directory suffix="Test.php">./Test</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
