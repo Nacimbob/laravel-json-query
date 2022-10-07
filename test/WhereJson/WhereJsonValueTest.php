@@ -5,14 +5,23 @@ namespace QueryJson\Test\WhereJson;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use QueryJson\Test\Stubs\JsonModel;
 use QueryJson\Test\TestCase;
-
+use QueryJson\Test\WhereJson\Traits\{
+    WhereJsonValueDataProvider,
+    WhereJsonValueGtDataProvider,
+    WhereJsonValueLikeDataProvider
+};
 class WhereJsonValueTest extends TestCase
 {
     use DatabaseMigrations;
+    use WhereJsonValueGtDataProvider;
+    use WhereJsonValueDataProvider;
+    use WhereJsonValueLikeDataProvider;
 
     /**
      * @test
      * @dataProvider whereJsonValueDataProvider
+     * @dataProvider whereJsonValueGtDataProvider
+     * @dataProvider WhereJsonValueLikeDataProvider
      */
     public function WhereJsonValue(array $data, string $path, $operator, $match, $expected)
     {
@@ -30,9 +39,11 @@ class WhereJsonValueTest extends TestCase
 
     }
 
-        /**
+    /**
      * @test
      * @dataProvider whereJsonValueDataProvider
+     * @dataProvider whereJsonValueGtDataProvider
+     * @dataProvider WhereJsonValueLikeDataProvider
      */
     public function orWhereJsonValue(array $data, string $path, $operator, $match, $expected)
     {
@@ -50,102 +61,5 @@ class WhereJsonValueTest extends TestCase
             );
         }
 
-    }
-
-
-
-    /**
-     * @return array
-     */
-    public function whereJsonValueDataProvider(): array
-    {
-        return [
-            [
-                [
-                    json_encode([
-                        [
-                            "name" => "text",
-                        ],
-                        [
-                            "name" => [
-                                "name" => 2
-                            ]
-                        ]
-                    ])
-                ],
-                "[0]->name",
-                '=',
-                "text",
-                1
-            ],
-            [
-                [
-                    json_encode([
-                        [
-                            "name" => 1,
-                        ],
-                        [
-                            "name" => [
-                                "name" => 2
-                            ]
-                        ]
-                    ])
-                ],
-                "[0]->invalid",
-                '=',
-                null,
-                0
-            ],
-            [
-                [
-                    json_encode([
-                        [
-                            "name" => 1,
-                        ],
-                        [
-                            "name" => [
-                                "name" => 2
-                            ]
-                        ]
-                    ])
-                ],
-                "[1]->name->name",
-                "=",
-                2,
-                1
-            ],
-            [
-                [
-                    json_encode([
-                        [
-                            "username" => "nacim boubrit",
-                            "password" => "********",
-                        ],
-                        [
-                            "favorites" => [ 
-                                "sport",
-                                "reading",
-                                "got"
-                            ]
-                        ]
-                    ]),
-                    json_encode([
-                        [
-                            "username" => "nacim boubrit",
-                            "favorites" => [
-                                "sport",
-                                "reading",
-                                "got"
-                            ]
-                        ],
-                    ])
-
-                ],
-                "[0]->username",
-                "=",
-                "nacim boubrit",
-                2
-            ],
-        ];
     }
 }
