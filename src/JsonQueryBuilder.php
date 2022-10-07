@@ -46,10 +46,8 @@ class JsonQueryBuilder
     private function getWhereJsonValueQuery($associativity = '')
     {
         $queryCompiler = $this->getQueryCompiler(__FUNCTION__, $associativity);
-
         return function(string $path, string $operator, $value) use ($queryCompiler, $associativity) {
             [$column, $path] = $queryCompiler[0]->resolveColumnAndPath($path);
-
 
             return $this->{$associativity .  'WhereRaw'}(
                 call_user_func($queryCompiler, $column, $operator),

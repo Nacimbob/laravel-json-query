@@ -7,7 +7,6 @@ abstract class QueryCompiler
 {
     protected const BASE_PATH_PREFIX = '$';
 
-
     /**
      * @param string $path
      * @return array
