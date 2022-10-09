@@ -109,16 +109,16 @@ trait WhereJsonValueDataProvider
                 [
                     json_encode([
                         [
-                            "username" => "nacim boubrit",
-                            "password" => "********",
-                        ],
-                        [
                             "favorites" => [ 
                                 "sport",
                                 "reading",
                                 "got"
                             ]
-                        ]
+                        ],
+                        [
+                            "username" => "nacim boubrit",
+                            "password" => "********",
+                        ],
                     ]),
                     json_encode([
                         [
@@ -135,7 +135,7 @@ trait WhereJsonValueDataProvider
                 "[0]->username",
                 "=",
                 "nacim boubrit",
-                2
+                1
             ],
         ];
     }
