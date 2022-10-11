@@ -56,7 +56,15 @@ abstract class QueryCompiler
     abstract public function getWhereJsonIsValidCompiler(string $column): string;
 
     /**
-     * @inheritDoc
+     * @param string $column
+     * @return string
      */
     abstract public function getWhereJsonIsInValidCompiler(string $column): string;
+
+    /**
+     * @param string $column
+     * @param string|null $as
+     * @return string
+     */
+    abstract public function getSelectJsonValueCompiler(string $column, string $as = null): string;
 }

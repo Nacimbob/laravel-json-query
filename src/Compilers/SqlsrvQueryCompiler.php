@@ -19,4 +19,19 @@ class SqlsrvQueryCompiler extends MysqlQueryCompiler
     {
         return "isjson($column) = 0";
     }
+
+        /**
+     * @inheritDoc
+     */
+    public function getSelectJsonValueCompiler(string $column, string $as = null): string
+    {
+
+        $query =  "json_value($column, ?)" ;
+
+        if (! is_null($as)) {
+            $query .= " as $as";
+        }
+
+        return $query;
+    } 
 }
