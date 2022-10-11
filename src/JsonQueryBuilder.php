@@ -112,4 +112,21 @@ class JsonQueryBuilder
             substr_replace($method, 'Compiler', - 5)
         ];
     }
+
+    /**
+     * @return callback
+     */
+    public function addSelectJson()
+    {
+        $queryCompiler = $this->getQueryCompiler('getSelectJsonValueQuery');
+
+        return function(string $path, string $as) use($queryCompiler) {
+            [$column, $path] = $queryCompiler[0]->resolveColumnAndPath($path);
+
+            return $this->selectRaw(
+                call_user_func($queryCompiler, $column, $as),
+                [$path]
+            );
+        };
+    }
 }
