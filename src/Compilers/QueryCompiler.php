@@ -66,5 +66,18 @@ abstract class QueryCompiler
      * @param string|null $as
      * @return string
      */
+
     abstract public function getSelectJsonValueCompiler(string $column, string $as = null): string;
+
+
+
+    /**
+     * @param mixed $builder
+     * @param string $column
+     * @param mixed $key
+     * @param mixed $value
+     * @return mixed
+     */
+    abstract public function getWhereJsonSearchTextCompiler($builder, string $column, $key, $value);
+
 }
