@@ -129,4 +129,35 @@ class JsonQueryBuilder
             );
         };
     }
+
+    /**
+     * @return mixed
+     */
+    public function whereJsonSearchText()
+    {
+        return $this->getWhereJsonSearchTextQuery();
+    }
+
+    /**
+    * @return mixed
+    */
+    public function orWhereJsonSearchText()
+    {
+        return $this->getWhereJsonSearchTextQuery('or');
+    }
+
+    /**
+     * @param string $associativity
+     * @return mixed
+     */
+    private function getWhereJsonSearchTextQuery(string $associativity = '')
+    {
+        $queryCompiler = $this->getQueryCompiler(__FUNCTION__, $associativity);
+
+        return function(string $column, string $searchBy, $searchValue) use ($queryCompiler, $associativity) {
+            return $this->{$associativity .  'Where'}(function($query) use ($queryCompiler, $column,  $searchBy, $searchValue) {
+                return call_user_func($queryCompiler, $query, $column, $searchBy, $searchValue);
+            });
+        };
+    }
 }
