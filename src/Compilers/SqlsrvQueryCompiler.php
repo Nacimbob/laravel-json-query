@@ -33,5 +33,29 @@ class SqlsrvQueryCompiler extends MysqlQueryCompiler
         }
 
         return $query;
-    } 
+    }
+
+    /**
+    * @inheritDoc
+    */
+    public function getWhereJsonSearchTextCompiler($query, string $column, $searchBy, $searchValue)
+    {
+        $endsWith = '[,}]';
+
+        return $query->where(
+            function ($q) use ($column, $searchBy, $searchValue, $endsWith) {
+                $q->where(
+                    $column,
+                    'like',
+                    '%'. sprintf('"%s":%s%s', $searchBy, $searchValue, $endsWith). '%'
+                )
+                ->orWhere(
+                    $column,
+                    'like',
+                    '%'. sprintf('"%s":"%s"%s', $searchBy, $searchValue, $endsWith). '%'
+                );
+            }
+
+        );
+    }
 }
