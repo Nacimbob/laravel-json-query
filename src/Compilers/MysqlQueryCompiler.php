@@ -43,5 +43,17 @@ class MysqlQueryCompiler extends QueryCompiler
         }
 
         return $query;
-    } 
+    }
+
+    /**
+    * @inheritDoc
+    */
+    public function getWhereJsonSearchTextCompiler($query, string $column, $searchBy, $searchValue)
+    {
+        return $query->Where(
+            $column,
+            'regexp',
+            '("' . $searchBy . '":(' . $searchValue . '|"' . $searchValue . '")[,}])'
+        );
+    }
 }
