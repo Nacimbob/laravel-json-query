@@ -11,6 +11,39 @@ trait WhereJsonValueGtDataProvider
                 [
                     json_encode([
                         [
+                            "score" => 22,
+                        ],
+                    ]),
+                    json_encode([
+                        [
+                            "score" => "8",
+                        ],
+                    ]),
+                    json_encode([
+                        [
+                            "score" => "2",
+                        ],
+                    ]),
+                    json_encode([
+                        [
+                            "score" => "",
+                        ],
+                        [
+                            "name" => [
+                                "name" => 2
+                            ]
+                        ]
+                    ])
+                ],
+                "[0]->score",
+                '>',
+                7,
+                2
+            ],
+            [
+                [
+                    json_encode([
+                        [
                             "name" => "22",
                         ],
                     ]),
