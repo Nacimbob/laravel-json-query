@@ -1,7 +1,10 @@
 {
-    "name": "canedoc/laravel-json-query",
+    "name": "canedoc/json-query-builder",
     "license": "MIT",
     "homepage": "https://github.com/canedoc/laravel_json_query",
+    "require": {
+        "php": ">=7.3"
+    },
     "require-dev": {
         "orchestra/testbench": "^5.0|^6.0|^7.0",
         "nunomaduro/collision": "^5.10"
