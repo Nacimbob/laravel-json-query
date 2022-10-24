@@ -2,7 +2,7 @@ laravel json query builder
 ==========
 
 **laravel json query builder** makes working with json column much easier, using json columns ley you combine NoSQL and relational structures in the same database. now you can use json columns as if they were structered columns for filtering, selecting and searching.
-We provide support for mysql, MariaDB, sql Server. 
+We provide support for **Mysql, MariaDB, Sql Server**. 
 
 
 
