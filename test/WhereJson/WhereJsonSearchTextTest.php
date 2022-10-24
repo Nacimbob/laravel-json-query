@@ -5,9 +5,7 @@ namespace QueryJson\Test\WhereJson;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use QueryJson\Test\Stubs\JsonModel;
 use QueryJson\Test\TestCase;
-use QueryJson\Test\WhereJson\Traits\{
-    WhereJsonSearchTextDataProvider,
-};
+use QueryJson\Test\WhereJson\Traits\WhereJsonSearchTextDataProvider;
 
 class WhereJsonSearchTextTest extends TestCase
 {
