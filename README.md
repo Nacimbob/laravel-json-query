@@ -31,7 +31,7 @@ ModelName::addSelect('column->path->to->element', 'as_name');
 ```
 
 ```php
-\ModelName::whereJsonValue('column->path->to->element', '>', 22);
+ModelName::whereJsonValue('column->path->to->element', '>', 22);
 ```
 
 we can use operators : =, >, <, >=, <=, like.
@@ -43,15 +43,18 @@ we can use operators : =, >, <, >=, <=, like.
 ```
 
 ```php
-\ModelName::whereJsonIsInvalid('column');
+ModelName::whereJsonIsInvalid('column');
 ```
 
 we can also use : orWhereJsonValue, orWhreJsonIsValid, orWhereJsonIsInvalid.
-
-
+## tests
+to test the package run:
+```bash
+./vendor/bin/testbench package:test
+```
 ## Authors
 
-* [Boubrit Nacim](https://github.com/canedoc) - *Initial work*
+* [Boubrit Nacim](https://github.com/canedoc)
 
 
 ## License
