@@ -59,4 +59,4 @@ to test the package run:
 
 ## License
 
-**Compoships** is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+**json-query-builder** is licensed under the [MIT License](http://opensource.org/licenses/MIT).
